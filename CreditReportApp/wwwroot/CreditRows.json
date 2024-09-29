@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith",
+        "creditAgency": "Experian",
+        "creditScore": 701,
+        "age": 33,
+        "state": "AZ",
+        "occupation":  "welder"
+    },
+    {
+        "id": 2,
+        "firstName": "Dave",
+        "lastName": "Miller",
+        "creditAgency": "Equifax",
+        "creditScore": 700,
+        "age": 43,
+        "state": "MT",
+        "occupation": "teacher"
+    },
+    {
+        "id": 3,
+        "firstName": "Jen",
+        "lastName": "Williams",
+        "creditAgency": "TransUnion",
+        "creditScore": 699,
+        "age": 73,
+        "state": "TN",
+        "occupation": "retired"
+    }
+]

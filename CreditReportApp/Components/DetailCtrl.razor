@@ -1,0 +1,38 @@
+﻿@using CreditReportApp.Models
+
+@if (CreditRow is not null)
+{
+    <div class="modal" tabindex="-1" style="display:block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Credit Details</h5>
+                    <button type="button" class="btn-close" @onclick="OnClose.InvokeAsync"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Id:</strong> @CreditRow.Id</p>
+                    <p><strong>Age:</strong> @CreditRow.Age</p>
+                    <p><strong>State:</strong> @CreditRow.State</p>
+                    <p><strong>Occupation:</strong> @CreditRow.Occupation</p>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public CreditRow? CreditRow { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<bool> OnClose { get; set; }
+
+    private async Task Close()
+    {
+        await OnClose.InvokeAsync();
+    }
+}

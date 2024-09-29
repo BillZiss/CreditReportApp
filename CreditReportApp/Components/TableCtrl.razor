@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using CreditReportApp.Models
+@using CreditReportApp.Components
+
+
+
+<table class="table" id="TableCtl">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Credit Agency</td>
+            <td>Credit Score</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (CreditRows is not null)
+        {
+            @foreach (var item in CreditRows)
+            {
+                <CreditReportApp.Components.RowCtrl CreditRow="item" OnRowSelected="OnRowSelected" OnViewDetails="OnViewDetails" />
+            }
+        }
+    </tbody>
+</table>
+
+
+<CreditReportApp.Components.DetailedCtrl Item="SelectedRow" OnClose="CloseDetails" />
+
+@code {
+
+    [Parameter]
+    public List<CreditRow> CreditRows { get; set; }
+    public CreditRow SelectedCreditRow 
+    { 
+        get; 
+        set; 
+    }
+
+    [Parameter]
+    public EventCallback<CreditRow> OnRowSelected { get; set; }
+
+    [Parameter]
+    public EventCallback<CreditRow> OnViewDetails { get; set; }
+
+    protected void ViewDetails(CreditRow creditRow)
+    {
+        SelectedCreditRow = creditRow;
+
+    }
+}

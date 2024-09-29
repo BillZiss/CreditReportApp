@@ -1,0 +1,45 @@
+﻿# Ignore Visual Studio temporary files, build results, and
+# user-specific files
+.vs/
+*.user
+*.suo
+
+# Ignore build directories
+bin/
+obj/
+
+# Ignore packages directory
+packages/
+*.nupkg
+*.snupkg
+
+# Ignore the global NuGet packages folder
+# (useful if you have a repository where dependencies are managed through a package manager)
+**/packages/
+
+# Ignore Visual Studio Code settings and workspace files
+.vscode/
+
+
+# Ignore logs and local debugging configurations
+*.log
+launchSettings.json
+
+# Ignore Publish directory (for ASP.NET or Blazor apps when published locally)
+Publish/
+
+# Ignore environment-specific configuration files
+appsettings.Development.json
+appsettings.Local.json
+
+# Ignore user secrets (these are stored outside the project folder by default)
+secrets.json
+
+# Ignore coverage files
+coverage/
+*.coverage
+*.coveragexml
+TestResults/
+
+# Ignore generated files
+GeneratedCode/

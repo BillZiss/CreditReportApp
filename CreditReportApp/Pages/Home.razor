@@ -1,0 +1,42 @@
+﻿@page "/"
+@using System.Text.Json
+@using CreditReportApp;
+@using CreditReportApp.Models
+@using CreditReportApp.Components
+
+
+<PageTitle></PageTitle>
+
+<h1>Credit Info</h1>
+
+<TableCtrl OnViewDetails="ShowDetails" CreditRows="CreditRows"/>
+
+@if ( selectedCreditRow != null )
+{
+    <DetailCtrl CreditRow="selectedCreditRow" OnClose="CloseDetails" />
+}
+
+@code {
+    private List<CreditRow> CreditRows;
+    private CreditRow selectedCreditRow;
+    private bool showDetails = false;
+
+
+    private void ShowDetails(CreditRow row)
+    {
+        selectedCreditRow = row;
+        StateHasChanged();
+    }
+
+    private void CloseDetails()
+    {
+        selectedCreditRow = null;
+        StateHasChanged();
+    }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        this.CreditRows = await DataService.GetCreditRowsAsync();
+    }
+}

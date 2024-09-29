@@ -1,0 +1,11 @@
+﻿Ensure that I can return to table with back button
+Ensure that I can return to table from the detail view itself.
+Enable highlighting when row is clicked via css
+Highlighting should remain after detail view
+Unit test: can navigate to details and back
+Unit test: verify that the correct row is highlighted when user returns to table
+Reusability of components
+Play with CSS
+
++ selected row in localStorage
++ accessability
