@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="CreditReportApp.styles.css" rel="stylesheet" />
+    <script src="/scripts/scripts.js"></script>
 </head>
 
 <body>
@@ -28,5 +29,9 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
-
 </html>
+<script>
+    window.addEventListener('load', function (event) {
+        reselectRow();            
+    });
+</script>

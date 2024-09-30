@@ -2,8 +2,6 @@
 @using CreditReportApp.Models
 @using CreditReportApp.Components
 
-
-
 <table class="table" id="TableCtl">
     <thead>
         <tr>
@@ -12,15 +10,21 @@
             <td>Last Name</td>
             <td>Credit Agency</td>
             <td>Credit Score</td>
-            <td>Action</td>
+            <td>Details Popup</td>
+            <td>Details Page</td>
         </tr>
     </thead>
     <tbody>
         @if (CreditRows is not null)
         {
-            @foreach (var item in CreditRows)
+            @foreach (var creditRow in CreditRows)
             {
-                <CreditReportApp.Components.RowCtrl CreditRow="item" OnRowSelected="OnRowSelected" OnViewDetails="OnViewDetails" />
+                <CreditReportApp.Components.RowCtrl 
+                CreditRow="creditRow" 
+                OnRowSelected="OnRowSelected" 
+                OnViewDetails="OnViewDetails"
+                OnViewDetailsPage="OnViewDetailsPage"
+                IsSelected="creditRow.Id==CreditRowStateService.SelectedRowId"/>
             }
         }
     </tbody>
@@ -30,24 +34,25 @@
 <CreditReportApp.Components.DetailedCtrl Item="SelectedRow" OnClose="CloseDetails" />
 
 @code {
+    [Inject] NavigationManager NavigationManager { get; set; }    
 
     [Parameter]
-    public List<CreditRow> CreditRows { get; set; }
-    public CreditRow SelectedCreditRow 
-    { 
-        get; 
-        set; 
-    }
+    public List<CreditRow> CreditRows { get; set; }  
+
+    public CreditRow SelectedCreditRow { get; set; }
 
     [Parameter]
     public EventCallback<CreditRow> OnRowSelected { get; set; }
 
+
     [Parameter]
     public EventCallback<CreditRow> OnViewDetails { get; set; }
+
+    [Parameter]
+    public EventCallback<CreditRow> OnViewDetailsPage { get; set; }
 
     protected void ViewDetails(CreditRow creditRow)
     {
         SelectedCreditRow = creditRow;
-
     }
 }

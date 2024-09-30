@@ -18,12 +18,24 @@ namespace CreditReportApp
 {
     public static class DataService
     {
+        private static List<CreditRow> _creditRows;
+
         public async static Task<List<CreditRow>> GetCreditRowsAsync()
         {
+            if (_creditRows != null) 
+                return _creditRows;
+
             var http = new HttpClient();
             string json = await http.GetStringAsync("http://localhost:5144/CreditRows.json");
             List<CreditRow> creditRows = JsonConvert.DeserializeObject<List<CreditRow>>(json);
             return creditRows;
+        }
+
+        public async static Task<CreditRow> GetCreditRowByIdAsync(int id)
+        {
+            var rows = await GetCreditRowsAsync();
+            var row = rows.Where<CreditRow>(cr => cr.Id == id).FirstOrDefault<CreditRow>();
+            return row;
         }
 
         public static CreditDetail GetCreditDetails()

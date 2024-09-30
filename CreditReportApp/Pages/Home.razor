@@ -4,39 +4,74 @@
 @using CreditReportApp.Models
 @using CreditReportApp.Components
 
+@inject IJSRuntime JSRuntime
 
 <PageTitle></PageTitle>
 
 <h1>Credit Info</h1>
 
-<TableCtrl OnViewDetails="ShowDetails" CreditRows="CreditRows"/>
+<TableCtrl OnViewDetails="ViewDetails" OnViewDetailsPage="ViewDetailsPage" OnRowSelected="OnRowSelected" CreditRows="CreditRows" />
 
 @if ( selectedCreditRow != null )
 {
     <DetailCtrl CreditRow="selectedCreditRow" OnClose="CloseDetails" />
 }
 
+<script>
+    // function selectCreditRow(row) {
+    //     var rows = document.getElementById("TableCtl").rows;
+    //     for (var i = 0; i < rows.length; i++) {
+    //         rows[i].classList.remove("selected");
+    //     }
+    //     row.classList.add("selected");
+    // }
+
+    // window.addEventListener('load', function () {
+    //     reselectRow();
+    // });
+
+
+</script>
+
 @code {
+    [Inject] NavigationManager NavigationManager { get; set; }
     private List<CreditRow> CreditRows;
     private CreditRow selectedCreditRow;
-    private bool showDetails = false;
 
+    private void ViewDetails(CreditRow row)
+    {
+        selectedCreditRow = row;               
+        // await JSRuntime.InvokeVoidAsync("selectCreditRow", row);
+        StateHasChanged();
+    }    
 
-    private void ShowDetails(CreditRow row)
+    private void ViewDetailsPage(CreditRow row)
     {
         selectedCreditRow = row;
-        StateHasChanged();
+        // await JSRuntime.InvokeVoidAsync("selectCreditRow", row);
+        NavigationManager.NavigateTo($"/detailsview/{row.Id}");
+    }
+
+    private void OnRowSelected()
+    {
+        this.SelectRow(selectedCreditRow.Id);
+    }
+
+    private void SelectRow(int id)
+    {
+        CreditRowStateService.SelectedRowId = id;
+        NavigationManager.NavigateTo($"/details/{id}");
     }
 
     private void CloseDetails()
     {
         selectedCreditRow = null;
-        StateHasChanged();
-    }
+        StateHasChanged();    }
 
 
     protected async override Task OnInitializedAsync()
     {
+        base.OnInitialized();
         this.CreditRows = await DataService.GetCreditRowsAsync();
     }
 }

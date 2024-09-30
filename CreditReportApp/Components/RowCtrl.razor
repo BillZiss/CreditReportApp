@@ -1,6 +1,25 @@
-﻿
+﻿<script>
+
+</script>
+
+<tr class="table-row" onclick="selectRow(this)" id="@CreditRow.LastName + @CreditRow.Id">
+    <td>@CreditRow.Id</td>
+    <td>@CreditRow.FirstName</td>
+    <td>@CreditRow.LastName</td>
+    <td>@CreditRow.CreditAgency</td>
+    <td>@CreditRow.CreditScore</td>
+    <td>
+        <button class="btn btn-primary" @onclick="(() => ViewDetails())">View Details</button>
+    </td>
+    <td>
+        <button class="btn btn-primary" @onclick="(() => ViewDetailsPage(CreditRow.Id))"  @onclick:stopPropagation="true" onmousedown="selectRowFromButtonClick(this)">View Details Page</button>
+    </td>
+</tr>
+
 @using Microsoft.AspNetCore.Components.Web
 @using CreditReportApp.Models
+
+@inject NavigationManager NavigationManager
 
 @code {
     [Parameter]
@@ -9,6 +28,13 @@
         get; 
         set; 
     } = default!;
+
+    [Parameter] 
+    public bool IsSelected 
+    { 
+        get; 
+        set; 
+    }
 
     [Parameter]
     public EventCallback<CreditRow> OnRowSelected 
@@ -24,31 +50,28 @@
         set; 
     }
 
+    [Parameter]
+    public EventCallback<CreditRow> OnViewDetailsPage
+    {
+        get;
+        set;
+    }
+
+    private string GetRowClass()
+    {
+        return IsSelected ? "selected" : "";
+    }
+
     private async Task ViewDetails()
     {
         await OnViewDetails.InvokeAsync(CreditRow);
     }
+
+    private void ViewDetailsPage(int id)
+    {               
+        NavigationManager.NavigateTo("/detailsview/" + id);
+    }
 }
 
 
-<script>
-    function selectRow(row) {        
-        var rows = document.getElementById("TableCtl").rows;
-        for (var i = 0; i < rows.length; i++) {
-            rows[i].classList.remove("selected");
-        }        
-        row.classList.add("selected");
-    }
-</script>
-
-<tr class="table-row" onclick="selectRow(this)">
-    <td>@CreditRow.Id</td>
-    <td>@CreditRow.FirstName</td>
-    <td>@CreditRow.LastName</td>
-    <td>@CreditRow.CreditAgency</td>
-    <td>@CreditRow.CreditScore</td>
-    <td>
-        <button class="btn btn-primary" @onclick="(() => ViewDetails())">View Details</button>
-    </td>
-</tr>
 
